@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #4b0082;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            background-color:  #feb47b;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        #card-element {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        #card-errors {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        button[type="submit"] {
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #feb47b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: black">Donation Page</h1>
+        <form id="payment-form">
+            <div>
+                <label for="card-holder-name">Cardholder Name</label>
+                <input type="text" id="card-holder-name" required>
+            </div>
+            <div>
+                <label for="card-element">Credit or Debit Card</label>
+                <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                </div>
+                <!-- Used to display form errors. -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+            <div>
+                <label for="apt-number">Apt Number</label>
+                <input type="text" id="apt-number">
+            </div>
+            <div>
+                <label for="street-address">Street Address</label>
+                <input type="text" id="street-address" required>
+            </div>
+            
+            <button type="submit" href="Thanks.html">Donate!</button>
+        </form>
+    </div>
+
+    <script>
+        // Set your publishable key
+        const stripe = Stripe('pk_live_51OvHP1P8ZOSh5nJaoRSpE3uutbnKJL4T3U1GJZAuQeHlPiCF93QBKhfag14klUAVtGrhAcakQ1Wok1vApYcaXDPc009IiNkf4F');
+
+        // Create an instance of Elements
+        const elements = stripe.elements();
+
+        // Create an instance of the card Element
+        const card = elements.create('card');
+
+        // Add an instance of the card Element into the card-element div
+        card.mount('#card-element');
+
+        // Handle form submission
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Create payment token
+            const {token, error} = await stripe.createToken(card);
+
+            if (error) {
+                // Inform the user if there was an error
+                const errorElement = document.getElementById('card-errors');
+                errorElement.textContent = error.message;
+            } else {
+                // Send the token to your server to charge the user
+                console.log(token);
+                // You can now submit the form or send the token to your backend
+                // for further processing (e.g., charging the card using Stripe's API).
+                // In a real application, you would send the token to your server.
+            }
+        });
+    </script>
+</body>
+</html>

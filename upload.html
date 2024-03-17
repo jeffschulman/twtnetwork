@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="style.css">
+<title>Upload</title>
+<body id="upload">
+    <div>
+        <h1 id="title">
+            <img id ="logo" src="logo.jpg" alt="Description of the image" width="50" height="50">
+            <p id="sitename"> Together we Thrive</p>
+            <div id="search">
+                <form action="" class="search-bar">
+                    <input style="border-radius: 50px; border: solid orange;"type="search" name="search" pattern=".*\S.*" required>
+                    <button class="search-btn" type="submit">
+                        <span ><img id ="searchglass" src="logoglass.png" alt=""></span>
+                    </button>
+                </form>
+            </div>
+                <button type="submit" id="upload" style="margin-left:300px;margin-top: 30px; width: 150px; height:40px; background:linear-gradient(to right, #ff7e5f, #feb47b);border: 3.2px solid purple; border-radius: 50px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" onclick="window.location.href='upload.html'">Upload</button>
+        </div>
+        </h1>
+    <div>
+        <div id="worktitle"> 
+        </div>
+        <div class="navbar" style="background: black;margin-top: -20px;; margin-inline-start: 0%; margin-inline-end: 0%;">
+            <a href="home.html" style="margin-left: 450px;margin-right: 75px;">Home</a>
+            <a href="index.html"style="margin-right: 75px;">My Studio</a>
+            <a href="analytics.html"style="margin-right: 75px;">Analytics</a>
+            <div class="dropdown">
+              <button class="dropbtn"style="margin-right: 75px;">Contact 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="contact.html">Email</a>
+              </div>
+            </div> 
+            <a href="about.html"style="margin-right: 75px;">About</a>
+          </div>
+          <h3 style="margin-top:150px;display: flex; justify-content: center; align-items:center;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"> Upload Portal</h3>
+          <style>
+            #video-container video {
+                width: 320px; /* Adjust width as needed */
+                height: 240px; /* Maintain aspect ratio */
+            }
+        </style>
+    </head>
+    <body>
+        <form action="#" method="post" enctype="multipart/form-data" style="display: flex;justify-content: center;align-items: center; border: 2px solid black; padding: 10px; border-radius: 50px; background: linear-gradient(to right, #ff7e5f, #feb47b);margin-left: 200px;margin-right: 200px;">
+            <input type="file" name="videos[]" id="videos" accept="video/*" multiple>
+            <button type="submit" >Publish</button>
+        </form>
+    <script>
+document.getElementById('videos').addEventListener('change', function(e) {
+const files = e.target.files;
+const videoContainer = document.createElement('div');
+videoContainer.setAttribute('id', 'video-container');
+document.body.appendChild(videoContainer);
+
+for (let i = 0; i < files.length; i++) {
+    const video = document.createElement('video');
+    video.src = URL.createObjectURL(files[i]);
+    video.controls = true;
+    video.style.marginBottom = '10px';
+    videoContainer.appendChild(video);
+}
+});
+
+
+    </script>
+</div>
+</body>
+</html>
